@@ -1,8 +1,28 @@
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 export default function Login({ setIsRegister }) {
+
+  const navigate = useNavigate();
+
+
+  const handleformSubmitLogin = (e) =>{
+    e.preventDefault();
+    let email = e.target[0].value;
+    let password = e.target[1].value;
+
+    axios.post("http://localhost:8000/api/v1/users/login", {
+      email,
+      password
+    }).then(result => {console.log(result); navigate('/home') })
+    .catch(err => console.log(err))
+  }
+
+
   return (
     <>
-      <form className="flex flex-col w-[60%] max-[768px]:w-[100%]">
-        <label htmlFor="email" className="">
+      <form className="flex flex-col w-[60%] max-[768px]:w-[100%]" onSubmit={(e)=> handleformSubmitLogin(e)}>
+        <label htmlFor="email" className="" >
           Email Address
         </label>
         <input

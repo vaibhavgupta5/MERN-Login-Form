@@ -3,10 +3,11 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
+import Home from "./componets/Home.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
-  { path: "/register", element: <register /> },
+  { path: "/home", element: <Home /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

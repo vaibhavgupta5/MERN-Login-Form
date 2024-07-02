@@ -37,3 +37,29 @@ export const registerUser = asyncHandler(async(req, res) =>{
 
 
 })
+
+export const loginUser = asyncHandler(async(req, res) =>{
+    const { email, password } = req.body;
+
+    if([email, password].some((field) => field?.trim() === "")){
+        throw new ApiError("All fields Required", 400);
+    }
+
+    const user = await User.findOne({email});
+
+    if(!user){
+        throw new ApiError("Not Account Found , Register First", 401);
+    }
+
+    console.log(user.password)
+
+    if(user.password !== password){
+        throw new ApiError("Password is incorrect", 401);
+    }
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(200,  "User Logged In Successfully")
+    )
+})
