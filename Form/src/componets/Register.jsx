@@ -1,7 +1,28 @@
+import axios from "axios"
+
 export default function Register({ setIsRegister }) {
+
+
+  const handleformSubmit = (e) =>{
+    e.preventDefault();
+    console.log(e.target[0].value)
+
+    let fullname = e.target[0].value;
+    let email = e.target[1].value;
+    let password = e.target[2].value;
+
+    axios.post("http://localhost:8000/api/v1/users/register", {
+      fullname,
+      email,
+      password
+    }).then(result => {console.log(result); setIsRegister(true)})
+    .catch(err => console.log(err))
+
+  }
+
   return (
     <>
-      <form className="flex flex-col w-[60%] max-[768px]:w-[100%]">
+      <form className="flex flex-col w-[60%] max-[768px]:w-[100%]" onSubmit={(e)=> handleformSubmit(e)}>
         <label htmlFor="email" className="">
           Full Name
         </label>
