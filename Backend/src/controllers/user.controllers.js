@@ -2,6 +2,8 @@ import { User } from "../models/user.model.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import bcrypt from "bcryptjs"
+
 
 export const registerUser = asyncHandler(async(req, res) =>{
     const { fullname, email, password } = req.body;
@@ -16,10 +18,14 @@ export const registerUser = asyncHandler(async(req, res) =>{
         throw new ApiError("Email already exists", 400);
     }
 
+    const encPassword = await bcrypt.hash(password, 10)
+    console.log(encPassword)
+
+
     const user = await User.create({
         fullname,
         email,
-        password
+        password: encPassword
     })
 
     const createdUser = await User.findById(user._id).select("-password")
@@ -51,14 +57,22 @@ export const loginUser = asyncHandler(async(req, res) =>{
         throw new ApiError("Not Account Found , Register First", 401);
     }
 
-    console.log(user.password)
 
-    if(user.password !== password){
+    const token = await user.generateAccessToken()
+    console.log(token)
+
+    if(!(await user.validatePassword(password, user.password))){
         throw new ApiError("Password is incorrect", 401);
+    }
+
+    const options ={
+        httpOnly: true,
+        secure: true
     }
 
     return res
     .status(200)
+    .cookie("token", token, options)
     .json(
         new ApiResponse(200,  "User Logged In Successfully")
     )
