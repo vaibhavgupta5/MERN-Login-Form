@@ -1,6 +1,9 @@
 # MERN Login/Register Form
 A fully functional Register/Login form made using MERN.
-![Uploading Screenshot_3-7-2024_12579_localhost.jpeg…]()
+
+| ![Login Page](https://github.com/vaibhavgupta5/MERN-Login-Form/assets/109146556/3518fcb5-6e3c-486a-a327-227a06ecfa29) |  ![Register Page](https://github.com/vaibhavgupta5/MERN-Login-Form/assets/109146556/0c547f18-386d-4209-b620-c9bbaa3a8b32) |
+| ------------- | ------------- |
+| Login Page  | Register Page  |
 
 ### Functionalities Added ->
 1) Switch easily between Login and Register Form
