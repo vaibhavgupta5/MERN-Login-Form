@@ -1,5 +1,6 @@
 # MERN Login/Register Form
 A fully functional Register/Login form made using MERN.
+![Uploading Screenshot_3-7-2024_12579_localhost.jpeg…]()
 
 ### Functionalities Added ->
 1) Switch easily between Login and Register Form
