@@ -4,13 +4,18 @@ import Login from "./componets/Login";
 import Register from "./componets/Register";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook, FaGithub } from "react-icons/fa";
+import Error from "./componets/Error";
 
 function App() {
   const [isRegister, setIsRegister] = useState(true);
 
   return (
-    <div className="bg-[url('./assets/bg.jpg')] h-[100vh] md:w-full bg-cover bg-center flex relative  ">
-      <div className="w-[50%] h-full flex items-end p-16 max-[768px]:hidden  ">
+    <div
+      className={`bg-[url('./assets/bg.jpg')] md:w-full bg-cover bg-center flex relative ${
+        isRegister ? "h-[100vh]" : "h-[101vh]"
+      } transition-all ease-in-out `}
+    >
+      <div className="w-[50%] h-full flex flex-col justify-end p-16 max-[768px]:hidden relative ">
         <p className="text-white font-bold text-[90px] leading-[5.5rem] pb-4 ">
           PAST
           <br /> OF SOME

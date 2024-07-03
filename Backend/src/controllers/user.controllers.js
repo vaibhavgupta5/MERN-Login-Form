@@ -57,7 +57,6 @@ export const loginUser = asyncHandler(async(req, res) =>{
         throw new ApiError("Not Account Found , Register First", 401);
     }
 
-
     const token = await user.generateAccessToken()
     console.log(token)
 

@@ -1,7 +1,14 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Error from "./Error";
+import { useState } from "react";
+
 
 export default function Login({ setIsRegister }) {
+
+  const [isHidden, setIsHidden] = useState(true)
+  const [message, setmessage] = useState("")
+  const [isSuccess, setIsSuccess] = useState(false)
 
   const navigate = useNavigate();
 
@@ -11,16 +18,41 @@ export default function Login({ setIsRegister }) {
     let email = e.target[0].value;
     let password = e.target[1].value;
 
+
+    if((email === "" || password === "")){
+      setIsHidden(false)
+      setmessage("All Fields are Required!")
+      setIsSuccess(false)
+      
+      setTimeout(() => {
+        setIsHidden(true)
+      }, 3000);
+    }
+
     axios.post("http://localhost:8000/api/v1/users/login", {
       email,
       password
     }).then(result => {console.log(result); navigate('/home') })
-    .catch(err => console.log(err))
+    .catch(err => {
+
+      console.log(err)
+      console.log(err.name, err.message, err.status)
+
+      setIsHidden(false)
+      setmessage(err.message)
+      setIsSuccess(false)
+
+      setTimeout(() => {
+        setIsHidden(true)
+      }, 3000);
+    })
   }
 
 
   return (
     <>
+      <Error isHidden={isHidden} message={message} isSuccess={isSuccess}/>
+
       <form className="flex flex-col w-[60%] max-[768px]:w-[100%]" onSubmit={(e)=> handleformSubmitLogin(e)}>
         <label htmlFor="email" className="" >
           Email Address
@@ -53,6 +85,8 @@ export default function Login({ setIsRegister }) {
       >
         Don't Have Account? Register
       </button>
+
+
     </>
   );
 }
